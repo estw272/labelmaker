@@ -1,0 +1,11 @@
+# dirs
+.vs
+.idea
+.vscode
+.git
+build
+cmake-build-debug
+cmake-build-release
+
+# files
+cmake/LibsPath.cmake

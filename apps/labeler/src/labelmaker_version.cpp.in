@@ -1,0 +1,22 @@
+#include "pch.h"
+#include "labelmaker_version.h"
+std::string get_labelmaker_version()
+{
+    return "@labelmaker_VERSION@";
+}
+unsigned get_labelmaker_version_major()
+{
+    return @labelmaker_VERSION_MAJOR@;
+}
+unsigned get_labelmaker_version_minor()
+{
+    return @labelmaker_VERSION_MINOR@ +0;
+}
+unsigned get_labelmaker_version_patch()
+{
+    return @labelmaker_VERSION_PATCH@ +0;
+}
+unsigned get_labelmaker_version_tweak()
+{
+    return @labelmaker_VERSION_TWEAK@ +0;
+}
