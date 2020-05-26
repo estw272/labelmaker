@@ -35,6 +35,10 @@
 #include <QKeySequence>
 #include <QShortcut>
 #include <QAction>
+#include <QSplitter>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QSpacerItem>
 
 //cereal
 #include "cereal/types/vector.hpp"

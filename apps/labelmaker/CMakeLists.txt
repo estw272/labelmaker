@@ -15,6 +15,7 @@ target_include_directories(labelmaker_version PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 set(HEADER_FILES
     src/mainwindow.h
     src/mainwidget.h
+    src/mainpanelwidget.h
 )
 set(SOURCE_FILES
     src/main.cpp
@@ -26,6 +27,7 @@ set(UI_FILES
 set(RESOURCE_FILES
     src/mainwindow.cpp
     src/mainwidget.cpp
+    src/mainpanelwidget.cpp
 )
 add_executable(labelmaker ${HEADER_FILES} ${SOURCE_FILES} ${UI_FILES} ${RESOURCE_FILES})
 set_target_properties(labelmaker PROPERTIES OUTPUT_NAME labelmaker)
