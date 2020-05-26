@@ -1,0 +1,51 @@
+#pragma once
+#ifndef _PCH_H_232398
+#define _PCH_H_232398
+
+#pragma warning(push, 0)
+
+#define WIN32_LEAN_AND_MEAN
+
+//basic c++ stuff
+#include <iostream>
+#include <string>
+#include <set>
+#include <vector>
+#include <fstream>
+#include <sstream>
+#include <thread>
+#include <filesystem>
+#include <algorithm>
+
+//QT stuff
+#include <QtWidgets/QApplication>
+#include <QVariant>
+#include <QMessageBox>
+#include <QSortFilterProxyModel>
+#include <QDebug>
+#include <QStandardItemModel>
+#include <QStandardItem>
+#include <QCloseEvent>
+#include <QAbstractTableModel>
+#include <QStyledItemDelegate>
+#include <QTableView>
+#include <QHeaderView>
+#include <QPushButton>
+#include <QFileDialog>
+#include <QKeySequence>
+#include <QShortcut>
+#include <QAction>
+
+//cereal
+#include "cereal/types/vector.hpp"
+#include "cereal/types/string.hpp"
+#include "cereal/archives/binary.hpp"
+#include "cereal/archives/xml.hpp"
+#include "cereal/types/set.hpp"
+#include "cereal/access.hpp"
+#include "cereal/types/memory.hpp"
+#include "cereal/types/optional.hpp"
+
+#pragma warning(pop)
+
+#endif

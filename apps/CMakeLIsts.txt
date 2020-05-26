@@ -1,1 +1,1 @@
-add_subdirectory(labeler)
+add_subdirectory(labelmaker)

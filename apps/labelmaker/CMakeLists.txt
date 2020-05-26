@@ -13,16 +13,21 @@ set_target_properties(labelmaker_version PROPERTIES LINKER_LANGUAGE CXX)
 target_include_directories(labelmaker_version PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(HEADER_FILES
+    src/mainwindow.h
+    src/mainwidget.h
 )
 set(SOURCE_FILES
+    src/main.cpp
 )
 set(UI_FILES
+    src/mainwindow.ui
+    src/mainwidget.ui
 )
 set(RESOURCE_FILES
+    src/mainwindow.cpp
+    src/mainwidget.cpp
 )
-set(PROTO_FILES
-)
-add_executable(labelmaker ${HEADER_FILES} ${SOURCE_FILES} ${PROTO_FILES} ${UI_FILES} ${RESOURCE_FILES})
+add_executable(labelmaker ${HEADER_FILES} ${SOURCE_FILES} ${UI_FILES} ${RESOURCE_FILES})
 set_target_properties(labelmaker PROPERTIES OUTPUT_NAME labelmaker)
 set_target_properties(labelmaker PROPERTIES LINKER_LANGUAGE CXX)
 target_precompile_headers(labelmaker PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/pch.h)
@@ -31,7 +36,7 @@ target_precompile_headers(labelmaker PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/pch
 set_property(TARGET labelmaker PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 find_package(spdlog REQUIRED)
-find_package(Boost REQUIRED COMPONENTS date_time regex)
+#find_package(Boost REQUIRED COMPONENTS)
 find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets)
 
 target_link_libraries(labelmaker
@@ -42,9 +47,7 @@ target_link_libraries(labelmaker
 
         spdlog::spdlog
 
-        Boost::boost 
-        Boost::date_time 
-        Boost::regex 
+#        Boost::boost
 
         Qt5::Core 
         Qt5::Gui 
