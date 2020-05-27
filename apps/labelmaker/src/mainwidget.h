@@ -14,7 +14,6 @@ private:
     Ui::MainWidget *ui;
 
     QVBoxLayout* main_layout_;
-    QTableView* images_list_table_;
 
 public:
     explicit MainWidget(QWidget *parent = nullptr);

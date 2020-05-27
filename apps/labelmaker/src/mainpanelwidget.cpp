@@ -40,6 +40,7 @@ void MainPanelWidget::init_elements() {
         QSplitter* splitter = new QSplitter(Qt::Vertical, this);
         splitter->addWidget(images_table_);
         splitter->addWidget(tags_widget);
+        
         splitter->setStretchFactor(0, 3);
         splitter->setStretchFactor(1, 1);
 
