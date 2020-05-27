@@ -17,6 +17,8 @@ set(HEADER_FILES
     src/mainwidget.h
     src/mainpanelwidget.h
     src/imagelisttablemodel.h
+    src/programstate.h
+    src/tagswidget.h
 )
 set(SOURCE_FILES
     src/main.cpp
@@ -30,6 +32,8 @@ set(RESOURCE_FILES
     src/mainwidget.cpp
     src/mainpanelwidget.cpp
     src/imagelisttablemodel.cpp
+    src/programstate.cpp
+    src/tagswidget.cpp
 )
 add_executable(labelmaker ${HEADER_FILES} ${SOURCE_FILES} ${UI_FILES} ${RESOURCE_FILES})
 set_target_properties(labelmaker PROPERTIES OUTPUT_NAME labelmaker)
