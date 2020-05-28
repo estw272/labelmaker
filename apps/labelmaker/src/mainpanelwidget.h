@@ -3,6 +3,7 @@
 #define _MAINPANELWIDGET_H_938394
 
 #include "imagelisttablemodel.h"
+#include "tagswidget.h"
 
 class MainPanelWidget: public QWidget {
     Q_OBJECT
@@ -10,6 +11,7 @@ class MainPanelWidget: public QWidget {
 private:
     QVBoxLayout* main_layout_;
     QTableView* images_table_;
+    TagsWidget* tags_widget_;
     ImageListTableModel* images_table_model_;
     QSortFilterProxyModel* images_table_model_proxy_;
 
@@ -19,6 +21,9 @@ public:
 
 private:
     void init_elements();
+
+public slots:
+    void load_folder();
 };
 
 #endif

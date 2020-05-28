@@ -39,6 +39,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QSpacerItem>
+#include <QLabel>
 
 //cereal
 #include "cereal/types/vector.hpp"

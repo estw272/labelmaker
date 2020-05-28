@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "mainpanelwidget.h"
+#include "programstate.h"
 
 MainPanelWidget::MainPanelWidget(QWidget *parent) : QWidget(parent) {
    init_elements();
@@ -26,12 +27,14 @@ void MainPanelWidget::init_elements() {
         images_table_->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     };
 
-    auto init_top_layout = []() -> QHBoxLayout* {
+    auto init_top_layout = [this]() -> QHBoxLayout* {
         QHBoxLayout* top_layout = new QHBoxLayout();
         QSpacerItem* spacer1 = new QSpacerItem(25, 0, QSizePolicy::Expanding);
         QPushButton* open_button = new QPushButton("Open");
         top_layout->addItem(spacer1);
         top_layout->addWidget(open_button);
+
+        connect(open_button, &QPushButton::clicked, this, &MainPanelWidget::load_folder);
 
         return top_layout;
     };
@@ -47,23 +50,42 @@ void MainPanelWidget::init_elements() {
         return splitter;
     };
 
+    auto init_signals = [this](){
+    };
+
     main_layout_ = new QVBoxLayout();
     main_layout_->setMargin(0);
 
-    //#TODO: placeholder for tags widget
-    QWidget* placeholder_widget = new QWidget();
-    QHBoxLayout* temp_l = new QHBoxLayout();
-    temp_l->setMargin(0);
-    QTableView* temp_t = new QTableView();
-    temp_l->addWidget(temp_t);
-    placeholder_widget->setLayout(temp_l);
-
     init_main_table();
+    tags_widget_ = new TagsWidget();
     auto top_layout = init_top_layout();
-    auto splitter = init_table_tagswidget_splitter(placeholder_widget);
+    auto splitter = init_table_tagswidget_splitter(tags_widget_);
+    init_signals();
 
     main_layout_->addLayout(top_layout);
     main_layout_->addWidget(splitter);
 
     this->setLayout(main_layout_);
+}
+
+void MainPanelWidget::load_folder() {
+    QFileDialog dialog(this);
+    dialog.setDirectory("C:\\");
+    dialog.setFileMode(QFileDialog::DirectoryOnly);
+    dialog.setOption(QFileDialog::ShowDirsOnly);
+    dialog.setOption(QFileDialog::ReadOnly);
+    QStringList res;
+    if (dialog.exec()) {
+        res = dialog.selectedFiles();
+    }
+
+    if (res.empty()) {
+        return;
+    }
+
+    QString dir_path_qstr = res.at(0);
+    std::wstring dir_path_wstr = dir_path_qstr.toStdWString();
+
+    //end
+    ProgramState::instance().set_open_path(dir_path_qstr);
 }

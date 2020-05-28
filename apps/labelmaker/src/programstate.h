@@ -6,7 +6,8 @@ class ProgramState {
 public:
 
 private:
-    std::set<QString> tags_;
+    std::vector<QString> tags_;
+    std::wstring open_path_{};
 
 public:
     ProgramState(const ProgramState&) = delete;
@@ -18,6 +19,11 @@ public:
         static ProgramState instance;
         return instance;
     }
+
+    std::vector<QString> get_tags() const;
+    QString get_open_path() const;
+    void set_open_path(QString path);
+    void set_open_path(std::wstring path);
 
 private:
     ProgramState();
