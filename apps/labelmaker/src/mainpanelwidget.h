@@ -10,8 +10,9 @@ class MainPanelWidget: public QWidget {
 
 private:
     QVBoxLayout* main_layout_;
-    QTableView* images_table_;
     TagsWidget* tags_widget_;
+
+    QTableView* images_table_;
     ImageListTableModel* images_table_model_;
     QSortFilterProxyModel* images_table_model_proxy_;
 

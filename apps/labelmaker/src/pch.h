@@ -16,6 +16,8 @@
 #include <thread>
 #include <filesystem>
 #include <algorithm>
+#include <mutex>
+#include <string_view>
 
 //QT stuff
 #include <QtWidgets/QApplication>

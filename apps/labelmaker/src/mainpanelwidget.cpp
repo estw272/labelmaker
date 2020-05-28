@@ -84,7 +84,25 @@ void MainPanelWidget::load_folder() {
     }
 
     QString dir_path_qstr = res.at(0);
-    std::wstring dir_path_wstr = dir_path_qstr.toStdWString();
+    std::wstring path = dir_path_qstr.toStdWString();
+
+    std::vector<QString> filenames_vec;
+    std::set<std::wstring> image_extensions {L".png", L".jpg", L".bmp"};
+    for (const auto &item: std::filesystem::directory_iterator(path)) {
+        try {
+            if (std::filesystem::is_regular_file(item)) {
+                std::wstring filename = item.path().filename().wstring();
+                std::wstring file_extension = item.path().extension().wstring();
+                if (image_extensions.contains(file_extension)) {
+                    filenames_vec.push_back(QString::fromStdWString(filename));
+                }
+            }
+        } catch (const std::exception& e) {
+            //#TODO: log exception
+        }
+    }
+
+    images_table_model_->update_data(filenames_vec);
 
     //end
     ProgramState::instance().set_open_path(dir_path_qstr);

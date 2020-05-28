@@ -20,6 +20,7 @@ set(HEADER_FILES
     src/programstate.h
     src/tagswidget.h
     src/qflowlayout.h
+    src/tag.h
 )
 set(SOURCE_FILES
     src/main.cpp
@@ -36,6 +37,7 @@ set(RESOURCE_FILES
     src/programstate.cpp
     src/tagswidget.cpp
     src/qflowlayout.cpp
+    src/tag.cpp
 )
 add_executable(labelmaker ${HEADER_FILES} ${SOURCE_FILES} ${UI_FILES} ${RESOURCE_FILES})
 set_target_properties(labelmaker PROPERTIES OUTPUT_NAME labelmaker)
