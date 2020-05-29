@@ -53,6 +53,9 @@
 #include "cereal/types/memory.hpp"
 #include "cereal/types/optional.hpp"
 
+//protobuf
+#include "prototagscache.pb.h"
+
 #pragma warning(pop)
 
 #endif

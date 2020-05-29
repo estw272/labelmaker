@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message ProtoImageInfo {
+    string filename = 1;
+    repeated string tag = 2;
+}

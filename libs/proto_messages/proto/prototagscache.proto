@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+import "protoimageinfo.proto";
+
+message ProtoTagsCache {
+    repeated ProtoImageInfo image_info = 1;
+}
