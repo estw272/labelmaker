@@ -2,11 +2,13 @@
 #ifndef _IMAGELISTTABLEMODEL_H_829382
 #define _IMAGELISTTABLEMODEL_H_829382
 
+#include "imageinfo.h"
+
 class ImageListTableModel: public QAbstractTableModel {
     Q_OBJECT
 
 private:
-    std::vector<QString> data_container_;
+    std::vector<ImageInfo> data_container_;
     std::mutex data_mutex_;
 
 public:
@@ -17,7 +19,8 @@ public:
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
-    void update_data(std::vector<QString>& new_data);
+    void update_data(std::vector<ImageInfo>& new_data);
+    const std::vector<ImageInfo>& data_ref() const;
 
 };
 

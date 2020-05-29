@@ -41,4 +41,10 @@ void MainWidget::init_elements() {
 
     this->setLayout(main_layout_);
     this->layout()->addWidget(splitter);
+
+    connect(main_panel, &MainPanelWidget::num_images_loaded, this, &MainWidget::forward_num_images_loaded);
+}
+
+void MainWidget::forward_num_images_loaded(int num_imgs) {
+    emit num_images_loaded(num_imgs);
 }

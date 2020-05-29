@@ -20,6 +20,9 @@ public:
 
 private:
     void init_elements();
+
+public slots:
+    void status_display_num_imgs_loaded(int num_imgs);
 };
 
 #endif // MAINWINDOW_H

@@ -22,6 +22,12 @@ public:
 private:
     void init_elements();
 
+public slots:
+    void forward_num_images_loaded(int num_imgs);
+
+signals:
+    void num_images_loaded(int);
+
 };
 
 #endif // MAINWIDGET_H

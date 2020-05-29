@@ -19,3 +19,6 @@ ProtoImageInfo ImageInfo::serialize() const {
     return imginfo;
 }
 
+ImageInfo::ImageInfo(std::string file_name): file_name_(file_name) {
+}
+

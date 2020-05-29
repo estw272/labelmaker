@@ -25,6 +25,9 @@ private:
 
 public slots:
     void load_folder();
+
+signals:
+    void num_images_loaded(int);
 };
 
 #endif

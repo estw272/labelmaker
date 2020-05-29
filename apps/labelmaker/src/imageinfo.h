@@ -9,6 +9,7 @@ public:
 
 public:
     ImageInfo();
+    ImageInfo(std::string file_name);
     ImageInfo(const ProtoImageInfo& pinfo);
 
     ProtoImageInfo serialize() const;

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "mainpanelwidget.h"
 #include "programstate.h"
+#include "imageinfo.h"
 
 MainPanelWidget::MainPanelWidget(QWidget *parent) : QWidget(parent) {
    init_elements();
@@ -86,15 +87,17 @@ void MainPanelWidget::load_folder() {
     QString dir_path_qstr = res.at(0);
     std::wstring path = dir_path_qstr.toStdWString();
 
-    std::vector<QString> filenames_vec;
-    std::set<std::wstring> image_extensions {L".png", L".jpg", L".bmp"};
+    ProgramState::instance().set_open_path(dir_path_qstr);
+
+    std::vector<ImageInfo> filenames_vec;
+    std::set<std::string> image_extensions {".png", ".jpg", ".bmp"};
     for (const auto &item: std::filesystem::directory_iterator(path)) {
         try {
             if (std::filesystem::is_regular_file(item)) {
-                std::wstring filename = item.path().filename().wstring();
-                std::wstring file_extension = item.path().extension().wstring();
+                std::string filename = item.path().filename().string();
+                std::string file_extension = item.path().extension().string();
                 if (image_extensions.contains(file_extension)) {
-                    filenames_vec.push_back(QString::fromStdWString(filename));
+                    filenames_vec.emplace_back(filename);
                 }
             }
         } catch (const std::exception& e) {
@@ -103,7 +106,5 @@ void MainPanelWidget::load_folder() {
     }
 
     images_table_model_->update_data(filenames_vec);
-
-    //end
-    ProgramState::instance().set_open_path(dir_path_qstr);
+    emit num_images_loaded(static_cast<int>(images_table_model_->data_ref().size()));
 }

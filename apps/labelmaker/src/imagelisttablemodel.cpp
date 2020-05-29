@@ -6,7 +6,7 @@ ImageListTableModel::ImageListTableModel(QObject *parent) : QAbstractTableModel(
 }
 
 int ImageListTableModel::rowCount(const QModelIndex &parent) const {
-    return data_container_.size();
+    return static_cast<int>(data_container_.size());
 }
 
 int ImageListTableModel::columnCount(const QModelIndex &parent) const {
@@ -20,7 +20,7 @@ QVariant ImageListTableModel::data(const QModelIndex &index, int role) const {
 
     switch (role) {
         case Qt::DisplayRole:
-            if (col == 0) { return data_container_.at(data_index); }
+            if (col == 0) { return QString::fromStdString(data_container_.at(data_index).file_name_); }
             break;
     }
 
@@ -38,10 +38,14 @@ QVariant ImageListTableModel::headerData(int section, Qt::Orientation orientatio
     return QVariant();
 }
 
-void ImageListTableModel::update_data(std::vector<QString> &new_data) {
+void ImageListTableModel::update_data(std::vector<ImageInfo> &new_data) {
     std::lock_guard lk(data_mutex_);
 
     this->beginResetModel();
     data_container_.swap(new_data);
     this->endResetModel();
+}
+
+const std::vector<ImageInfo>& ImageListTableModel::data_ref() const {
+    return data_container_;
 }
