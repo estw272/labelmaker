@@ -25,9 +25,12 @@ private:
 
 public slots:
     void load_folder();
+    void image_selection_changed(const QModelIndex& current, const QModelIndex& previous);
+    void next_image();
+    void prev_image();
 
 signals:
-    void num_images_loaded(int);
+    void num_images_loaded(int, int);
 };
 
 #endif

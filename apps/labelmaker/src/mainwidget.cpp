@@ -45,6 +45,6 @@ void MainWidget::init_elements() {
     connect(main_panel, &MainPanelWidget::num_images_loaded, this, &MainWidget::forward_num_images_loaded);
 }
 
-void MainWidget::forward_num_images_loaded(int num_imgs) {
-    emit num_images_loaded(num_imgs);
+void MainWidget::forward_num_images_loaded(int index_selected, int num_imgs) {
+    emit num_images_loaded(index_selected, num_imgs);
 }

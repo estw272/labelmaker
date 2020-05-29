@@ -22,6 +22,10 @@ void MainWindow::init_elements() {
     connect(main_widget, &MainWidget::num_images_loaded, this, &MainWindow::status_display_num_imgs_loaded);
 }
 
-void MainWindow::status_display_num_imgs_loaded(int num_imgs) {
-    statusBar()->showMessage(QString::number(num_imgs) + " files");
+void MainWindow::status_display_num_imgs_loaded(int index_selected, int num_imgs) {
+    if (index_selected < 0) {
+        statusBar()->showMessage(QString::number(num_imgs) + " files");
+    } else {
+        statusBar()->showMessage(QString::number(index_selected) + " of " + QString::number(num_imgs) + " files");
+    }
 }

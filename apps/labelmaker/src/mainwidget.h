@@ -23,10 +23,10 @@ private:
     void init_elements();
 
 public slots:
-    void forward_num_images_loaded(int num_imgs);
+    void forward_num_images_loaded(int index_selected, int num_imgs);
 
 signals:
-    void num_images_loaded(int);
+    void num_images_loaded(int, int);
 
 };
 

@@ -26,6 +26,8 @@ void MainPanelWidget::init_elements() {
         images_table_->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
         images_table_->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+        connect(images_table_->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MainPanelWidget::image_selection_changed);
     };
 
     auto init_top_layout = [this]() -> QHBoxLayout* {
@@ -51,7 +53,12 @@ void MainPanelWidget::init_elements() {
         return splitter;
     };
 
-    auto init_signals = [this](){
+    auto init_hotkeys = [this](){
+        QShortcut *next_shortcut = new QShortcut(QKeySequence(Qt::Key_Down), this);
+        connect(next_shortcut, &QShortcut::activated, this, &MainPanelWidget::next_image);
+
+        QShortcut *prev_shortcut = new QShortcut(QKeySequence(Qt::Key_Up), this);
+        connect(prev_shortcut, &QShortcut::activated, this, &MainPanelWidget::prev_image);
     };
 
     main_layout_ = new QVBoxLayout();
@@ -61,7 +68,7 @@ void MainPanelWidget::init_elements() {
     tags_widget_ = new TagsWidget();
     auto top_layout = init_top_layout();
     auto splitter = init_table_tagswidget_splitter(tags_widget_);
-    init_signals();
+    init_hotkeys();
 
     main_layout_->addLayout(top_layout);
     main_layout_->addWidget(splitter);
@@ -106,5 +113,44 @@ void MainPanelWidget::load_folder() {
     }
 
     images_table_model_->update_data(filenames_vec);
-    emit num_images_loaded(static_cast<int>(images_table_model_->data_ref().size()));
+    emit num_images_loaded(-1, static_cast<int>(images_table_model_->data_ref().size()));
+}
+
+void MainPanelWidget::image_selection_changed(const QModelIndex& current, const QModelIndex& previous) {
+    if (!current.isValid()) {
+        return;
+    }
+
+    int row = current.row();
+    auto model = images_table_->model();
+    emit num_images_loaded(row + 1, static_cast<int>(images_table_model_->data_ref().size()));
+}
+
+void MainPanelWidget::next_image() {
+    QModelIndexList selection = images_table_->selectionModel()->selectedIndexes();
+    if (!selection.empty()) {
+        QModelIndex index = selection.at(0);
+
+        if (index.row() >= images_table_model_->data_ref().size()) {
+            return;
+        }
+
+        images_table_->selectRow(index.row() + 1);
+    } else {
+        images_table_->selectRow(0);
+    }
+}
+
+void MainPanelWidget::prev_image() {
+    QModelIndexList selection = images_table_->selectionModel()->selectedIndexes();
+    if (!selection.empty()) {
+        QModelIndex index = selection.at(0);
+        if (index.row() == 0) {
+            return;
+        }
+
+        images_table_->selectRow(index.row() - 1);
+    } else {
+        images_table_->selectRow(0);
+    }
 }
