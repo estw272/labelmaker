@@ -2,6 +2,7 @@
 #include "mainwidget.h"
 #include "ui_mainwidget.h"
 #include "mainpanelwidget.h"
+#include "imageviewerwidget.h"
 
 MainWidget::MainWidget(QWidget *parent) : QWidget(parent), ui(new Ui::MainWidget) {
     ui->setupUi(this);
@@ -29,20 +30,21 @@ void MainWidget::init_elements() {
     main_layout_->setMargin(0);
 
     //#TODO: temp image viewer widget
-    QWidget* image_viewer_holder = new QWidget();
-    QVBoxLayout* image_viewer_layout = new QVBoxLayout();
-    image_viewer_layout->setMargin(0);
-    QTableView* test2 = new QTableView();
-    image_viewer_layout->addWidget(test2);
-    image_viewer_holder->setLayout(image_viewer_layout);
-
+//    QWidget* image_viewer_holder = new QWidget();
+//    QVBoxLayout* image_viewer_layout = new QVBoxLayout();
+//    image_viewer_layout->setMargin(0);
+//    QTableView* test2 = new QTableView();
+//    image_viewer_layout->addWidget(test2);
+//    image_viewer_holder->setLayout(image_viewer_layout);
+    ImageViewer* image_viewer = new ImageViewer();
     MainPanelWidget* main_panel = new MainPanelWidget();
-    auto* splitter = init_main_splitter(main_panel, image_viewer_holder);
+    auto* splitter = init_main_splitter(main_panel, image_viewer);
 
     this->setLayout(main_layout_);
     this->layout()->addWidget(splitter);
 
     connect(main_panel, &MainPanelWidget::num_images_loaded, this, &MainWidget::forward_num_images_loaded);
+    connect(main_panel, &MainPanelWidget::update_image_path, image_viewer, &ImageViewer::update_image);
 }
 
 void MainWidget::forward_num_images_loaded(int index_selected, int num_imgs) {

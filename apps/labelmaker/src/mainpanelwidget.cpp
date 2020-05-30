@@ -124,6 +124,9 @@ void MainPanelWidget::image_selection_changed(const QModelIndex& current, const 
     int row = current.row();
     auto model = images_table_->model();
     emit num_images_loaded(row + 1, static_cast<int>(images_table_model_->data_ref().size()));
+
+    QString image_name = model->data(model->index(current.row(), 0)).toString();
+    emit update_image_path(image_name);
 }
 
 void MainPanelWidget::next_image() {

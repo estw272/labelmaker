@@ -31,6 +31,7 @@ public slots:
 
 signals:
     void num_images_loaded(int, int);
+    void update_image_path(QString);
 };
 
 #endif
