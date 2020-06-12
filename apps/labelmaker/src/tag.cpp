@@ -4,6 +4,8 @@
 Tag::Tag(const QString& text, QWidget* parent) : QPushButton(text, parent), selected_(false) {
     this->setFlat(true);
     set_disabled();
+
+    connect(this, &QPushButton::clicked, this, &Tag::toggle);
 }
 
 void Tag::toggle() {
