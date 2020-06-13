@@ -25,6 +25,7 @@ public:
     void setGeometry(const QRect &rect) override;
     QSize sizeHint() const override;
     QLayoutItem* takeAt(int index) override;
+    size_t num_tags() const;
 
 private:
     int doLayout(const QRect &rect, bool testOnly) const;

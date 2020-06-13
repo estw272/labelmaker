@@ -29,3 +29,4 @@ void MainWindow::status_display_num_imgs_loaded(int index_selected, int num_imgs
         statusBar()->showMessage(QString::number(index_selected) + " of " + QString::number(num_imgs) + " files");
     }
 }
+

@@ -8,9 +8,20 @@ ProgramState::ProgramState() {
     tags_.push_back("signature");
     tags_.push_back("name");
     tags_.push_back("date");
+
+    hotkeys_.push_back(QKeySequence(Qt::Key_1));
+    hotkeys_.push_back(QKeySequence(Qt::Key_2));
+    hotkeys_.push_back(QKeySequence(Qt::Key_3));
+    hotkeys_.push_back(QKeySequence(Qt::Key_4));
+    hotkeys_.push_back(QKeySequence(Qt::Key_5));
+    hotkeys_.push_back(QKeySequence(Qt::Key_6));
+    hotkeys_.push_back(QKeySequence(Qt::Key_7));
+    hotkeys_.push_back(QKeySequence(Qt::Key_8));
+    hotkeys_.push_back(QKeySequence(Qt::Key_9));
+    hotkeys_.push_back(QKeySequence(Qt::Key_0));
 }
 
-std::vector<QString> ProgramState::get_tags() const {
+const std::vector<QString> ProgramState::get_tags() const {
     return tags_;
 }
 
@@ -24,4 +35,8 @@ void ProgramState::set_open_path(QString path) {
 
 void ProgramState::set_open_path(std::wstring path) {
     open_path_ = path;
+}
+
+const std::vector<QKeySequence> ProgramState::get_hotkeys() const {
+    return hotkeys_;
 }

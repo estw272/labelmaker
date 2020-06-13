@@ -3,6 +3,9 @@
 #include "ui_mainwidget.h"
 #include "mainpanelwidget.h"
 #include "imageviewerwidget.h"
+#include "qflowlayout.h"
+#include "tag.h"
+#include "programstate.h"
 
 MainWidget::MainWidget(QWidget *parent) : QWidget(parent), ui(new Ui::MainWidget) {
     ui->setupUi(this);
@@ -26,16 +29,19 @@ void MainWidget::init_elements() {
         return splitter;
     };
 
+    auto init_hotkeys = [this](MainPanelWidget* main_panel){
+        const auto ksequences = ProgramState::instance().get_hotkeys();
+        QFlowLayout* fl = main_panel->get_tags_widget()->get_flow_layout();
+        size_t tags_size = fl->num_tags();
+        for (int i = 0; i < std::min(ksequences.size(), tags_size); ++i) {
+            QShortcut* ks = new QShortcut(ksequences[i], this);
+            connect(ks, &QShortcut::activated, dynamic_cast<Tag*>(fl->itemAt(i)->widget()), &Tag::toggle);
+        }
+    };
+
     main_layout_ = new QVBoxLayout(this);
     main_layout_->setMargin(0);
 
-    //#TODO: temp image viewer widget
-//    QWidget* image_viewer_holder = new QWidget();
-//    QVBoxLayout* image_viewer_layout = new QVBoxLayout();
-//    image_viewer_layout->setMargin(0);
-//    QTableView* test2 = new QTableView();
-//    image_viewer_layout->addWidget(test2);
-//    image_viewer_holder->setLayout(image_viewer_layout);
     ImageViewer* image_viewer = new ImageViewer();
     MainPanelWidget* main_panel = new MainPanelWidget();
     auto* splitter = init_main_splitter(main_panel, image_viewer);
@@ -45,6 +51,8 @@ void MainWidget::init_elements() {
 
     connect(main_panel, &MainPanelWidget::num_images_loaded, this, &MainWidget::forward_num_images_loaded);
     connect(main_panel, &MainPanelWidget::update_image_path, image_viewer, &ImageViewer::update_image);
+
+    init_hotkeys(main_panel);
 }
 
 void MainWidget::forward_num_images_loaded(int index_selected, int num_imgs) {

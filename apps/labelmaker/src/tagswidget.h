@@ -10,12 +10,14 @@ class TagsWidget: public QWidget {
 private:
     QFlowLayout* tags_layout_;
     std::vector<QString> tags_vec_;
+    std::vector<QShortcut*> key_sequences_;
 
 public:
     explicit TagsWidget(QWidget* parent = nullptr);
     ~TagsWidget();
 
     void init_elements();
+    QFlowLayout* get_flow_layout() const;
 };
 
 #endif

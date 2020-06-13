@@ -157,3 +157,7 @@ void MainPanelWidget::prev_image() {
         images_table_->selectRow(0);
     }
 }
+
+TagsWidget *MainPanelWidget::get_tags_widget() const {
+    return tags_widget_;
+}

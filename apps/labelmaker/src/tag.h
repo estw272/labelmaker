@@ -7,16 +7,20 @@ class Tag: public QPushButton {
 
 private:
     bool selected_;
+    QString name_;
+    QString public_name_;
 
 public:
     Tag(const QString& text, QWidget* parent = nullptr);
 
-    void toggle();
     void reset();
 
 private:
     void set_enabled();
     void set_disabled();
+
+public slots:
+    void toggle();
 };
 
 #endif

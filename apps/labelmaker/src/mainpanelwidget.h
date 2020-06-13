@@ -29,6 +29,8 @@ public slots:
     void next_image();
     void prev_image();
 
+    TagsWidget* get_tags_widget() const;
+
 signals:
     void num_images_loaded(int, int);
     void update_image_path(QString);

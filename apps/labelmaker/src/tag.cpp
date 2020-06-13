@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "tag.h"
 
-Tag::Tag(const QString& text, QWidget* parent) : QPushButton(text, parent), selected_(false) {
+Tag::Tag(const QString& text, QWidget* parent) : QPushButton(text, parent),
+    selected_(false),
+    name_(text) {
     this->setFlat(true);
     set_disabled();
 
@@ -10,6 +12,7 @@ Tag::Tag(const QString& text, QWidget* parent) : QPushButton(text, parent), sele
 
 void Tag::toggle() {
     selected_ = !selected_;
+    std::cout << "inside toggle\n";
 
     if (selected_) {
         set_enabled();
@@ -48,3 +51,4 @@ void Tag::set_disabled() {
                         //                              "font-size: 25px;"
                         "}");
 }
+

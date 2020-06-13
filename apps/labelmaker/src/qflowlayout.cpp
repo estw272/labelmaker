@@ -133,3 +133,7 @@ int QFlowLayout::smartSpacing(QStyle::PixelMetric pm) const {
         return static_cast<QLayout*>(parent)->spacing();
     }
 }
+
+size_t QFlowLayout::num_tags() const {
+    return item_list_.size();
+}
