@@ -18,6 +18,12 @@ public:
 
     void init_elements();
     QFlowLayout* get_flow_layout() const;
+
+public slots:
+    void forward_tag_toggle(QString name, bool active);
+
+signals:
+    void tag_toggled(QString name, bool active);
 };
 
 #endif

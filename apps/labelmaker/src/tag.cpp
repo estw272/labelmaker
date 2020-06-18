@@ -19,6 +19,8 @@ void Tag::toggle() {
     } else {
         set_disabled();
     }
+
+    emit tag_toggled(name_, selected_);
 }
 
 void Tag::reset() {

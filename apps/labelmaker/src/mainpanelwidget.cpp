@@ -61,11 +61,18 @@ void MainPanelWidget::init_elements() {
         connect(prev_shortcut, &QShortcut::activated, this, &MainPanelWidget::prev_image);
     };
 
+    auto init_tags_widget = [this]() -> TagsWidget* {
+        TagsWidget* tags_widget = new TagsWidget();
+        connect(tags_widget, &TagsWidget::tag_toggled, this, &MainPanelWidget::toggle_tag);
+
+        return tags_widget;
+    };
+
     main_layout_ = new QVBoxLayout();
     main_layout_->setMargin(0);
 
     init_main_table();
-    tags_widget_ = new TagsWidget();
+    tags_widget_ = init_tags_widget();
     auto top_layout = init_top_layout();
     auto splitter = init_table_tagswidget_splitter(tags_widget_);
     init_hotkeys();
@@ -161,3 +168,25 @@ void MainPanelWidget::prev_image() {
 TagsWidget *MainPanelWidget::get_tags_widget() const {
     return tags_widget_;
 }
+
+void MainPanelWidget::toggle_tag(QString name, bool active) {
+    QModelIndexList selection = images_table_->selectionModel()->selectedIndexes();
+
+    if (!selection.empty()) {
+        QModelIndex index = selection.at(0);
+        auto model = images_table_->model();
+        std::string image_filename = model->data(model->index(index.row(), 0)).toString().toStdString();
+        ImageInfo& item = images_table_model_->get_data_ref(image_filename);
+
+        if (active) {
+            item.tags_.insert(name.toStdString());
+        } else {
+            item.tags_.erase(name.toStdString());
+        }
+        model->dataChanged(index, index);
+
+        ImageInfo& item2 = images_table_model_->get_data_ref(image_filename);
+        std::cout << "Tags num: " << item2.tags_.size() << "\n";
+    }
+}
+

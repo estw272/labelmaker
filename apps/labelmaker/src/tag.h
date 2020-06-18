@@ -21,6 +21,9 @@ private:
 
 public slots:
     void toggle();
+
+signals:
+    void tag_toggled(QString tag_name, bool enabled);
 };
 
 #endif

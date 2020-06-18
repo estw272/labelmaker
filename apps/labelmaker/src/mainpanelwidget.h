@@ -28,6 +28,7 @@ public slots:
     void image_selection_changed(const QModelIndex& current, const QModelIndex& previous);
     void next_image();
     void prev_image();
+    void toggle_tag(QString name, bool active);
 
     TagsWidget* get_tags_widget() const;
 

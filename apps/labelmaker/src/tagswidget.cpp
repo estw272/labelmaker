@@ -21,6 +21,8 @@ void TagsWidget::init_elements() {
     std::for_each(tags_vec_.cbegin(), tags_vec_.cend(), [&, this](auto item){
         Tag* tag = new Tag(item);
         tags_layout_->addWidget(tag);
+
+        connect(tag, &Tag::tag_toggled, this, &TagsWidget::forward_tag_toggle);
     });
 
     this->setLayout(tags_layout_);
@@ -28,4 +30,8 @@ void TagsWidget::init_elements() {
 
 QFlowLayout *TagsWidget::get_flow_layout() const {
     return tags_layout_;
+}
+
+void TagsWidget::forward_tag_toggle(QString name, bool active) {
+    emit tag_toggled(name, active);
 }
