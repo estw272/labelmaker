@@ -21,6 +21,7 @@ private:
 
 public slots:
     void toggle();
+    void toggle_display_tags(std::set<std::string> tags);
 
 signals:
     void tag_toggled(QString tag_name, bool enabled);

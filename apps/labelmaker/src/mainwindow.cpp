@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     this->setWindowTitle("LabelMaker");
 
+    register_custom_structs();
     init_elements();
 }
 
@@ -20,6 +21,10 @@ void MainWindow::init_elements() {
     ui->main_widget_holder->addWidget(main_widget);
 
     connect(main_widget, &MainWidget::num_images_loaded, this, &MainWindow::status_display_num_imgs_loaded);
+}
+
+void MainWindow::register_custom_structs() {
+    qRegisterMetaType<std::set<std::string>>("std::set<std::string>>");
 }
 
 void MainWindow::status_display_num_imgs_loaded(int index_selected, int num_imgs) {

@@ -11,16 +11,7 @@ Tag::Tag(const QString& text, QWidget* parent) : QPushButton(text, parent),
 }
 
 void Tag::toggle() {
-    selected_ = !selected_;
-    std::cout << "inside toggle\n";
-
-    if (selected_) {
-        set_enabled();
-    } else {
-        set_disabled();
-    }
-
-    emit tag_toggled(name_, selected_);
+    emit tag_toggled(name_, !selected_);
 }
 
 void Tag::reset() {
@@ -52,5 +43,15 @@ void Tag::set_disabled() {
                         //                              "border-radius: 5px;"
                         //                              "font-size: 25px;"
                         "}");
+}
+
+void Tag::toggle_display_tags(std::set<std::string> tags) {
+    if (tags.find(name_.toStdString()) != tags.end()) {
+        selected_ = true;
+        set_enabled();
+    } else {
+        selected_ = false;
+        set_disabled();
+    }
 }
 

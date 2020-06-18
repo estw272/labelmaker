@@ -20,6 +20,7 @@ public:
 
 private:
     void init_elements();
+    void register_custom_structs();
 
 public slots:
     void status_display_num_imgs_loaded(int index_selected, int num_imgs);

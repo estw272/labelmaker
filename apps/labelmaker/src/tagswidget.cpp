@@ -23,6 +23,7 @@ void TagsWidget::init_elements() {
         tags_layout_->addWidget(tag);
 
         connect(tag, &Tag::tag_toggled, this, &TagsWidget::forward_tag_toggle);
+        connect(this, &TagsWidget::load_tags, tag, &Tag::toggle_display_tags);
     });
 
     this->setLayout(tags_layout_);
@@ -34,4 +35,8 @@ QFlowLayout *TagsWidget::get_flow_layout() const {
 
 void TagsWidget::forward_tag_toggle(QString name, bool active) {
     emit tag_toggled(name, active);
+}
+
+void TagsWidget::forward_load_tags(std::set<std::string> tags) {
+    emit load_tags(tags);
 }

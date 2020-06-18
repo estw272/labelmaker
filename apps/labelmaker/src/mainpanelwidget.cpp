@@ -64,6 +64,7 @@ void MainPanelWidget::init_elements() {
     auto init_tags_widget = [this]() -> TagsWidget* {
         TagsWidget* tags_widget = new TagsWidget();
         connect(tags_widget, &TagsWidget::tag_toggled, this, &MainPanelWidget::toggle_tag);
+        connect(this, &MainPanelWidget::load_tags, tags_widget, &TagsWidget::load_tags);
 
         return tags_widget;
     };
@@ -134,6 +135,11 @@ void MainPanelWidget::image_selection_changed(const QModelIndex& current, const 
 
     QString image_name = model->data(model->index(current.row(), 0)).toString();
     emit update_image_path(image_name);
+
+    //toggle image tags
+    std::string image_filename = model->data(model->index(current.row(), 0)).toString().toStdString();
+    ImageInfo& item = images_table_model_->get_data_ref(image_filename);
+    emit load_tags(item.tags_);
 }
 
 void MainPanelWidget::next_image() {
@@ -185,8 +191,7 @@ void MainPanelWidget::toggle_tag(QString name, bool active) {
         }
         model->dataChanged(index, index);
 
-        ImageInfo& item2 = images_table_model_->get_data_ref(image_filename);
-        std::cout << "Tags num: " << item2.tags_.size() << "\n";
+        emit load_tags(item.tags_);
     }
 }
 
