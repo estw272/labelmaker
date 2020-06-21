@@ -32,6 +32,7 @@
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
+#include "prototag.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_protoimageinfo_2eproto
@@ -169,32 +170,26 @@ class ProtoImageInfo :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kTagFieldNumber = 2,
+    kTagsFieldNumber = 2,
     kFilenameFieldNumber = 1,
   };
-  // repeated string tag = 2;
-  int tag_size() const;
+  // repeated .ProtoTag tags = 2;
+  int tags_size() const;
   private:
-  int _internal_tag_size() const;
+  int _internal_tags_size() const;
   public:
-  void clear_tag();
-  const std::string& tag(int index) const;
-  std::string* mutable_tag(int index);
-  void set_tag(int index, const std::string& value);
-  void set_tag(int index, std::string&& value);
-  void set_tag(int index, const char* value);
-  void set_tag(int index, const char* value, size_t size);
-  std::string* add_tag();
-  void add_tag(const std::string& value);
-  void add_tag(std::string&& value);
-  void add_tag(const char* value);
-  void add_tag(const char* value, size_t size);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& tag() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_tag();
+  void clear_tags();
+  ::ProtoTag* mutable_tags(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ProtoTag >*
+      mutable_tags();
   private:
-  const std::string& _internal_tag(int index) const;
-  std::string* _internal_add_tag();
+  const ::ProtoTag& _internal_tags(int index) const;
+  ::ProtoTag* _internal_add_tags();
   public:
+  const ::ProtoTag& tags(int index) const;
+  ::ProtoTag* add_tags();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ProtoTag >&
+      tags() const;
 
   // string filename = 1;
   void clear_filename();
@@ -217,7 +212,7 @@ class ProtoImageInfo :
   class _Internal;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> tag_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ProtoTag > tags_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr filename_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_protoimageinfo_2eproto;
@@ -293,78 +288,40 @@ inline void ProtoImageInfo::set_allocated_filename(std::string* filename) {
   // @@protoc_insertion_point(field_set_allocated:ProtoImageInfo.filename)
 }
 
-// repeated string tag = 2;
-inline int ProtoImageInfo::_internal_tag_size() const {
-  return tag_.size();
+// repeated .ProtoTag tags = 2;
+inline int ProtoImageInfo::_internal_tags_size() const {
+  return tags_.size();
 }
-inline int ProtoImageInfo::tag_size() const {
-  return _internal_tag_size();
+inline int ProtoImageInfo::tags_size() const {
+  return _internal_tags_size();
 }
-inline void ProtoImageInfo::clear_tag() {
-  tag_.Clear();
+inline ::ProtoTag* ProtoImageInfo::mutable_tags(int index) {
+  // @@protoc_insertion_point(field_mutable:ProtoImageInfo.tags)
+  return tags_.Mutable(index);
 }
-inline std::string* ProtoImageInfo::add_tag() {
-  // @@protoc_insertion_point(field_add_mutable:ProtoImageInfo.tag)
-  return _internal_add_tag();
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ProtoTag >*
+ProtoImageInfo::mutable_tags() {
+  // @@protoc_insertion_point(field_mutable_list:ProtoImageInfo.tags)
+  return &tags_;
 }
-inline const std::string& ProtoImageInfo::_internal_tag(int index) const {
-  return tag_.Get(index);
+inline const ::ProtoTag& ProtoImageInfo::_internal_tags(int index) const {
+  return tags_.Get(index);
 }
-inline const std::string& ProtoImageInfo::tag(int index) const {
-  // @@protoc_insertion_point(field_get:ProtoImageInfo.tag)
-  return _internal_tag(index);
+inline const ::ProtoTag& ProtoImageInfo::tags(int index) const {
+  // @@protoc_insertion_point(field_get:ProtoImageInfo.tags)
+  return _internal_tags(index);
 }
-inline std::string* ProtoImageInfo::mutable_tag(int index) {
-  // @@protoc_insertion_point(field_mutable:ProtoImageInfo.tag)
-  return tag_.Mutable(index);
+inline ::ProtoTag* ProtoImageInfo::_internal_add_tags() {
+  return tags_.Add();
 }
-inline void ProtoImageInfo::set_tag(int index, const std::string& value) {
-  // @@protoc_insertion_point(field_set:ProtoImageInfo.tag)
-  tag_.Mutable(index)->assign(value);
+inline ::ProtoTag* ProtoImageInfo::add_tags() {
+  // @@protoc_insertion_point(field_add:ProtoImageInfo.tags)
+  return _internal_add_tags();
 }
-inline void ProtoImageInfo::set_tag(int index, std::string&& value) {
-  // @@protoc_insertion_point(field_set:ProtoImageInfo.tag)
-  tag_.Mutable(index)->assign(std::move(value));
-}
-inline void ProtoImageInfo::set_tag(int index, const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  tag_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:ProtoImageInfo.tag)
-}
-inline void ProtoImageInfo::set_tag(int index, const char* value, size_t size) {
-  tag_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:ProtoImageInfo.tag)
-}
-inline std::string* ProtoImageInfo::_internal_add_tag() {
-  return tag_.Add();
-}
-inline void ProtoImageInfo::add_tag(const std::string& value) {
-  tag_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:ProtoImageInfo.tag)
-}
-inline void ProtoImageInfo::add_tag(std::string&& value) {
-  tag_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:ProtoImageInfo.tag)
-}
-inline void ProtoImageInfo::add_tag(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  tag_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:ProtoImageInfo.tag)
-}
-inline void ProtoImageInfo::add_tag(const char* value, size_t size) {
-  tag_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:ProtoImageInfo.tag)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
-ProtoImageInfo::tag() const {
-  // @@protoc_insertion_point(field_list:ProtoImageInfo.tag)
-  return tag_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
-ProtoImageInfo::mutable_tag() {
-  // @@protoc_insertion_point(field_mutable_list:ProtoImageInfo.tag)
-  return &tag_;
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ProtoTag >&
+ProtoImageInfo::tags() const {
+  // @@protoc_insertion_point(field_list:ProtoImageInfo.tags)
+  return tags_;
 }
 
 #ifdef __GNUC__

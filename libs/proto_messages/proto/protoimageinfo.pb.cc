@@ -14,6 +14,7 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
+extern PROTOBUF_INTERNAL_EXPORT_prototag_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ProtoTag_prototag_2eproto;
 class ProtoImageInfoDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<ProtoImageInfo> _instance;
@@ -29,8 +30,9 @@ static void InitDefaultsscc_info_ProtoImageInfo_protoimageinfo_2eproto() {
   ::ProtoImageInfo::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ProtoImageInfo_protoimageinfo_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_ProtoImageInfo_protoimageinfo_2eproto}, {}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_ProtoImageInfo_protoimageinfo_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_ProtoImageInfo_protoimageinfo_2eproto}, {
+      &scc_info_ProtoTag_prototag_2eproto.base,}};
 
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_protoimageinfo_2eproto[1];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_protoimageinfo_2eproto = nullptr;
@@ -43,7 +45,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protoimageinfo_2eproto::offset
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::ProtoImageInfo, filename_),
-  PROTOBUF_FIELD_OFFSET(::ProtoImageInfo, tag_),
+  PROTOBUF_FIELD_OFFSET(::ProtoImageInfo, tags_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::ProtoImageInfo)},
@@ -54,10 +56,12 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_protoimageinfo_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\024protoimageinfo.proto\"/\n\016ProtoImageInfo"
-  "\022\020\n\010filename\030\001 \001(\t\022\013\n\003tag\030\002 \003(\tb\006proto3"
+  "\n\024protoimageinfo.proto\032\016prototag.proto\";"
+  "\n\016ProtoImageInfo\022\020\n\010filename\030\001 \001(\t\022\027\n\004ta"
+  "gs\030\002 \003(\0132\t.ProtoTagb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_protoimageinfo_2eproto_deps[1] = {
+  &::descriptor_table_prototag_2eproto,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_protoimageinfo_2eproto_sccs[1] = {
   &scc_info_ProtoImageInfo_protoimageinfo_2eproto.base,
@@ -65,8 +69,8 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_pro
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_protoimageinfo_2eproto_once;
 static bool descriptor_table_protoimageinfo_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_protoimageinfo_2eproto = {
-  &descriptor_table_protoimageinfo_2eproto_initialized, descriptor_table_protodef_protoimageinfo_2eproto, "protoimageinfo.proto", 79,
-  &descriptor_table_protoimageinfo_2eproto_once, descriptor_table_protoimageinfo_2eproto_sccs, descriptor_table_protoimageinfo_2eproto_deps, 1, 0,
+  &descriptor_table_protoimageinfo_2eproto_initialized, descriptor_table_protodef_protoimageinfo_2eproto, "protoimageinfo.proto", 107,
+  &descriptor_table_protoimageinfo_2eproto_once, descriptor_table_protoimageinfo_2eproto_sccs, descriptor_table_protoimageinfo_2eproto_deps, 1, 1,
   schemas, file_default_instances, TableStruct_protoimageinfo_2eproto::offsets,
   file_level_metadata_protoimageinfo_2eproto, 1, file_level_enum_descriptors_protoimageinfo_2eproto, file_level_service_descriptors_protoimageinfo_2eproto,
 };
@@ -82,6 +86,9 @@ class ProtoImageInfo::_Internal {
  public:
 };
 
+void ProtoImageInfo::clear_tags() {
+  tags_.Clear();
+}
 ProtoImageInfo::ProtoImageInfo()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
@@ -90,7 +97,7 @@ ProtoImageInfo::ProtoImageInfo()
 ProtoImageInfo::ProtoImageInfo(const ProtoImageInfo& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr),
-      tag_(from.tag_) {
+      tags_(from.tags_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   filename_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (!from._internal_filename().empty()) {
@@ -128,7 +135,7 @@ void ProtoImageInfo::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  tag_.Clear();
+  tags_.Clear();
   filename_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   _internal_metadata_.Clear();
 }
@@ -147,13 +154,13 @@ const char* ProtoImageInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated string tag = 2;
+      // repeated .ProtoTag tags = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           ptr -= 1;
           do {
             ptr += 1;
-            ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8(_internal_add_tag(), ptr, ctx, "ProtoImageInfo.tag");
+            ptr = ctx->ParseMessage(_internal_add_tags(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
@@ -195,14 +202,12 @@ failure:
         1, this->_internal_filename(), target);
   }
 
-  // repeated string tag = 2;
-  for (int i = 0, n = this->_internal_tag_size(); i < n; i++) {
-    const auto& s = this->_internal_tag(i);
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      s.data(), static_cast<int>(s.length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "ProtoImageInfo.tag");
-    target = stream->WriteString(2, s, target);
+  // repeated .ProtoTag tags = 2;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_tags_size()); i < n; i++) {
+    stream->EnsureSpace(&target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessageToArray(2, this->_internal_tags(i), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -221,12 +226,11 @@ size_t ProtoImageInfo::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated string tag = 2;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(tag_.size());
-  for (int i = 0, n = tag_.size(); i < n; i++) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-      tag_.Get(i));
+  // repeated .ProtoTag tags = 2;
+  total_size += 1UL * this->_internal_tags_size();
+  for (const auto& msg : this->tags_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
   // string filename = 1;
@@ -267,7 +271,7 @@ void ProtoImageInfo::MergeFrom(const ProtoImageInfo& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  tag_.MergeFrom(from.tag_);
+  tags_.MergeFrom(from.tags_);
   if (from.filename().size() > 0) {
 
     filename_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.filename_);
@@ -295,7 +299,7 @@ bool ProtoImageInfo::IsInitialized() const {
 void ProtoImageInfo::InternalSwap(ProtoImageInfo* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  tag_.InternalSwap(&other->tag_);
+  tags_.InternalSwap(&other->tags_);
   filename_.Swap(&other->filename_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
 }

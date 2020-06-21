@@ -43,11 +43,7 @@ set(RESOURCE_FILES
         src/imageinfo.cpp
         src/imageviewerwidget.cpp
 )
-set(PROTO_FILES
-        proto/stateproto.pb.cc
-        proto/stateproto.pb.h
-)
-add_executable(labelmaker ${HEADER_FILES} ${SOURCE_FILES} ${UI_FILES} ${RESOURCE_FILES} ${PROTO_FILES})
+add_executable(labelmaker ${HEADER_FILES} ${SOURCE_FILES} ${UI_FILES} ${RESOURCE_FILES})
 set_target_properties(labelmaker PROPERTIES OUTPUT_NAME labelmaker)
 set_target_properties(labelmaker PROPERTIES LINKER_LANGUAGE CXX)
 target_precompile_headers(labelmaker PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/pch.h)

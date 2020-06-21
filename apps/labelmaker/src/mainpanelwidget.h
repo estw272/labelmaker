@@ -4,6 +4,7 @@
 
 #include "imagelisttablemodel.h"
 #include "tagswidget.h"
+#include "imageinfo.h"
 
 class MainPanelWidget: public QWidget {
     Q_OBJECT
@@ -22,6 +23,7 @@ public:
 
 private:
     void init_elements();
+    std::set<ImageInfo> load_tags_from_file(std::wstring tags_file);
 
 public slots:
     void load_folder();

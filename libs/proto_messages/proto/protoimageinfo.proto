@@ -1,6 +1,8 @@
 syntax = "proto3";
 
+import "prototag.proto";
+
 message ProtoImageInfo {
     string filename = 1;
-    repeated string tag = 2;
+    repeated ProtoTag tags = 2;
 }

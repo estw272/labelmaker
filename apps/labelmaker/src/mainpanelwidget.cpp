@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "mainpanelwidget.h"
 #include "programstate.h"
-#include "imageinfo.h"
-#include "../proto/stateproto.pb.h"
 
 MainPanelWidget::MainPanelWidget(QWidget *parent) : QWidget(parent) {
    init_elements();
@@ -106,13 +104,23 @@ void MainPanelWidget::load_folder() {
     ProgramState::instance().set_open_path(dir_path_qstr);
 
     std::vector<ImageInfo> filenames_vec;
-    std::set<std::string> image_extensions {".png", ".jpg", ".bmp"};
+    std::set<ImageInfo> loaded_tags = load_tags_from_file(path + L"/tags.lm");
+
+    std::set<std::string> image_extensions {".png", ".jpg", ".bmp"}; //#TODO: move tags filename and extensions somewhere (like json/settings file)
     for (const auto &item: std::filesystem::directory_iterator(path)) {
         try {
             if (std::filesystem::is_regular_file(item)) {
                 std::string filename = item.path().filename().string();
                 std::string file_extension = item.path().extension().string();
-                if (image_extensions.contains(file_extension)) {
+                if (!image_extensions.contains(file_extension)) {
+                    continue;
+                }
+
+                ImageInfo temp_info(filename);
+                auto idx = loaded_tags.find(temp_info);
+                if (idx != loaded_tags.end()) {
+                    filenames_vec.push_back(*idx);
+                } else {
                     filenames_vec.emplace_back(filename);
                 }
             }
@@ -202,21 +210,43 @@ void MainPanelWidget::save_state_to_file() {
         return;
     }
 
-    StateProto proto;
-
+    ProtoTagsCache proto;
     std::for_each(data.cbegin(), data.cend(), [&proto](auto album){
         if (!album.tags_.empty()) {
-            ImageInfoProto* imgproto = proto.add_image_info();
-            imgproto->set_path(album.file_name_);
+            ProtoImageInfo* pinfo = proto.add_image_info();
+            pinfo->set_filename(album.file_name_);
             for (auto item: album.tags_) {
-                TagProto* tagproto = imgproto->add_tags();
-                tagproto->set_tag_name(item);
+                ProtoTag* tag = pinfo->add_tags();
+                tag->set_tag_name(item);
             }
         }
     });
 
-    std::fstream output("C:/testfile.lm", std::ios::out | std::ios::trunc | std::ios::binary);
+    std::wstring open_path = ProgramState::instance().get_open_path().toStdWString();
+    std::fstream output(open_path + L"/tags.lm", std::ios::out | std::ios::trunc | std::ios::binary);
     proto.SerializeToOstream(&output);
+}
+
+std::set<ImageInfo> MainPanelWidget::load_tags_from_file(std::wstring tags_file) {
+    std::set<ImageInfo> res;
+
+    if (!std::filesystem::exists(std::filesystem::path(tags_file))) {
+        return res;
+    }
+
+    ProtoTagsCache proto;
+    std::fstream input(tags_file, std::ios::in | std::ios::binary);
+    if (!proto.ParseFromIstream(&input)) {
+        return res;
+        //#TODO: logging
+    }
+
+    for (int i = 0; i < proto.image_info_size(); ++i) {
+        const ProtoImageInfo& pinfo = proto.image_info(i);
+        res.emplace(pinfo);
+    }
+
+    return res;
 }
 
 

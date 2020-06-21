@@ -7,7 +7,7 @@ public:
 
 private:
     std::vector<QString> tags_;
-    std::wstring open_path_{};
+    std::wstring open_path_ {};
 
     std::vector<QKeySequence> hotkeys_;
 

@@ -9,14 +9,15 @@ public:
 
 public:
     ImageInfo();
-    ImageInfo(std::string file_name);
-    ImageInfo(const ProtoImageInfo& pinfo);
+    explicit ImageInfo(std::string file_name);
+    explicit ImageInfo(const ProtoImageInfo& pinfo);
 
-    ProtoImageInfo serialize() const;
+//    ProtoImageInfo serialize() const;
 };
 
 inline bool operator==(const ImageInfo& lhs, const ImageInfo& rhs) {
-    return std::tie(lhs.file_name_, lhs.tags_) == std::tie(rhs.file_name_, rhs.tags_);
+//    return std::tie(lhs.file_name_, lhs.tags_) == std::tie(rhs.file_name_, rhs.tags_);
+    return lhs.file_name_ == rhs.file_name_;
 }
 
 inline bool operator<(const ImageInfo& lhs, const ImageInfo& rhs) {

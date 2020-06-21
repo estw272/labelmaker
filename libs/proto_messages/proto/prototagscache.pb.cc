@@ -14,7 +14,7 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
-extern PROTOBUF_INTERNAL_EXPORT_protoimageinfo_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ProtoImageInfo_protoimageinfo_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_protoimageinfo_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_ProtoImageInfo_protoimageinfo_2eproto;
 class ProtoTagsCacheDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<ProtoTagsCache> _instance;
