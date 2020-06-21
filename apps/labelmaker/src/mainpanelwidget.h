@@ -32,6 +32,7 @@ public slots:
     void prev_image();
     void toggle_tag(QString name, bool active);
     void save_state_to_file();
+    void export_to_csv();
 
     TagsWidget* get_tags_widget() const;
 

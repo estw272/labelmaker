@@ -55,7 +55,6 @@ endif()
 
 find_package(spdlog REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets)
-find_package(protobuf CONFIG REQUIRED)
 
 target_link_libraries(labelmaker
     PRIVATE
@@ -73,9 +72,4 @@ target_link_libraries(labelmaker
         Qt5::Core 
         Qt5::Gui 
         Qt5::Widgets
-
-        protobuf::libprotobuf
-        protobuf::libprotobuf-lite
-        protobuf::libprotoc
-        ${PROTOBUF_LIBRARY}
 )

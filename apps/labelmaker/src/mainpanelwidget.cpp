@@ -33,10 +33,13 @@ void MainPanelWidget::init_elements() {
         QHBoxLayout* top_layout = new QHBoxLayout();
         QSpacerItem* spacer1 = new QSpacerItem(25, 0, QSizePolicy::Expanding);
         QPushButton* open_button = new QPushButton("Open");
+        QPushButton* export_csv_button = new QPushButton("Export");
+        top_layout->addWidget(export_csv_button);
         top_layout->addItem(spacer1);
         top_layout->addWidget(open_button);
 
         connect(open_button, &QPushButton::clicked, this, &MainPanelWidget::load_folder);
+        connect(export_csv_button, &QPushButton::clicked, this, &MainPanelWidget::export_to_csv);
 
         return top_layout;
     };
@@ -83,7 +86,7 @@ void MainPanelWidget::init_elements() {
     this->setLayout(main_layout_);
 }
 
-void MainPanelWidget::load_folder() {
+void MainPanelWidget::load_folder() { //#TODO: refactor to different functions
     QFileDialog dialog(this);
     dialog.setDirectory("C:\\");
     dialog.setFileMode(QFileDialog::DirectoryOnly);
@@ -106,7 +109,7 @@ void MainPanelWidget::load_folder() {
     std::vector<ImageInfo> filenames_vec;
     std::set<ImageInfo> loaded_tags = load_tags_from_file(path + L"/tags.lm");
 
-    std::set<std::string> image_extensions {".png", ".jpg", ".bmp"}; //#TODO: move tags filename and extensions somewhere (like json/settings file)
+    std::set<std::string> image_extensions {".png", ".jpg", ".bmp", ".jpeg"}; //#TODO: move tags filename and extensions somewhere (like json/settings file)
     for (const auto &item: std::filesystem::directory_iterator(path)) {
         try {
             if (std::filesystem::is_regular_file(item)) {
@@ -247,6 +250,42 @@ std::set<ImageInfo> MainPanelWidget::load_tags_from_file(std::wstring tags_file)
     }
 
     return res;
+}
+
+void MainPanelWidget::export_to_csv() {
+    const std::vector<ImageInfo> data = images_table_model_->get_data();
+
+    std::wstring open_path = ProgramState::instance().get_open_path().toStdWString();
+    std::ofstream file;
+    file.open(open_path + L"/labels.csv");
+    file << "filename,";
+    auto tags = ProgramState::instance().get_tags();
+    for (int i = 0; i < tags.size(); ++i) {
+        file << tags.at(i).toStdString();
+        if (i < tags.size() - 1) {
+            file << ",";
+        }
+    }
+    file << "\n";
+
+    std::for_each(data.cbegin(), data.cend(), [&file, &tags](auto item){
+        file << item.file_name_ << ", ";
+        for (int i = 0; i < tags.size(); ++i) {
+            if (item.tags_.find(tags.at(i).toStdString()) != item.tags_.end()) {
+                file << "1";
+            } else {
+                file << "0";
+            }
+
+            if (i < tags.size() - 1) {
+                file << ",";
+            }
+        }
+
+        file << "\n";
+    });
+
+    file.close();
 }
 
 
