@@ -254,6 +254,9 @@ std::set<ImageInfo> MainPanelWidget::load_tags_from_file(std::wstring tags_file)
 
 void MainPanelWidget::export_to_csv() {
     const std::vector<ImageInfo> data = images_table_model_->get_data();
+    if (data.empty()) {
+        return;
+    }
 
     std::wstring open_path = ProgramState::instance().get_open_path().toStdWString();
     std::ofstream file;
@@ -286,6 +289,11 @@ void MainPanelWidget::export_to_csv() {
     });
 
     file.close();
+
+    QMessageBox msg_box;
+    msg_box.setText("Exported labels to 'labels.csv'");
+    msg_box.addButton(QMessageBox::Ok);
+    msg_box.exec();
 }
 
 
