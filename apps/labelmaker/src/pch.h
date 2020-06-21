@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <mutex>
 #include <string_view>
+#include <fstream>
 
 //QT stuff
 #include <QtWidgets/QApplication>

@@ -51,10 +51,15 @@ void MainWidget::init_elements() {
 
     connect(main_panel, &MainPanelWidget::num_images_loaded, this, &MainWidget::forward_num_images_loaded);
     connect(main_panel, &MainPanelWidget::update_image_path, image_viewer, &ImageViewer::update_image);
+    connect(this, &MainWidget::save_state, main_panel, &MainPanelWidget::save_state_to_file);
 
     init_hotkeys(main_panel);
 }
 
 void MainWidget::forward_num_images_loaded(int index_selected, int num_imgs) {
     emit num_images_loaded(index_selected, num_imgs);
+}
+
+void MainWidget::forward_save_state() {
+    emit save_state();
 }

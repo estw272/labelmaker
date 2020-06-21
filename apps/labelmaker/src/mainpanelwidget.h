@@ -29,6 +29,7 @@ public slots:
     void next_image();
     void prev_image();
     void toggle_tag(QString name, bool active);
+    void save_state_to_file();
 
     TagsWidget* get_tags_widget() const;
 
@@ -36,6 +37,7 @@ signals:
     void num_images_loaded(int, int);
     void update_image_path(QString);
     void load_tags(std::set<std::string> tags);
+
 };
 
 #endif

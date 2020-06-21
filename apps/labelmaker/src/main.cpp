@@ -3,6 +3,8 @@
 #include "programstate.h"
 
 int main(int argc, char* argv[]) {
+    GOOGLE_PROTOBUF_VERIFY_VERSION;
+
     auto& ps = ProgramState::instance();
 
     QApplication a(argc, argv);

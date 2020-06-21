@@ -23,6 +23,7 @@ public:
     const std::vector<ImageInfo>& data_ref() const;
 
     ImageInfo& get_data_ref(std::string& filename);
+    std::vector<ImageInfo> get_data() const;
 
 };
 

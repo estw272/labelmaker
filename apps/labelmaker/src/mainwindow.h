@@ -24,6 +24,12 @@ private:
 
 public slots:
     void status_display_num_imgs_loaded(int index_selected, int num_imgs);
+
+signals:
+    void save_state();
+
+protected:
+    void closeEvent(QCloseEvent *event);
 };
 
 #endif // MAINWINDOW_H

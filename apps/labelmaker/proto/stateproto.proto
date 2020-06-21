@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message TagProto {
+    string tag_name = 1;
+}
+
+message ImageInfoProto {
+    string path = 1;
+    repeated TagProto tags = 2;
+}
+
+message StateProto {
+    repeated ImageInfoProto image_info = 1;
+}

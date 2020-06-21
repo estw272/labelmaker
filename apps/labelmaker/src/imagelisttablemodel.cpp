@@ -71,3 +71,7 @@ ImageInfo& ImageListTableModel::get_data_ref(std::string& filename) {
 
     return data_container_.at(0);
 }
+
+std::vector<ImageInfo> ImageListTableModel::get_data() const {
+    return data_container_;
+}

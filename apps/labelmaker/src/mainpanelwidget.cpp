@@ -2,6 +2,7 @@
 #include "mainpanelwidget.h"
 #include "programstate.h"
 #include "imageinfo.h"
+#include "../proto/stateproto.pb.h"
 
 MainPanelWidget::MainPanelWidget(QWidget *parent) : QWidget(parent) {
    init_elements();
@@ -194,4 +195,28 @@ void MainPanelWidget::toggle_tag(QString name, bool active) {
         emit load_tags(item.tags_);
     }
 }
+
+void MainPanelWidget::save_state_to_file() {
+    std::vector<ImageInfo> data = images_table_model_->get_data();
+    if (data.empty()) {
+        return;
+    }
+
+    StateProto proto;
+
+    std::for_each(data.cbegin(), data.cend(), [&proto](auto album){
+        if (!album.tags_.empty()) {
+            ImageInfoProto* imgproto = proto.add_image_info();
+            imgproto->set_path(album.file_name_);
+            for (auto item: album.tags_) {
+                TagProto* tagproto = imgproto->add_tags();
+                tagproto->set_tag_name(item);
+            }
+        }
+    });
+
+    std::fstream output("C:/testfile.lm", std::ios::out | std::ios::trunc | std::ios::binary);
+    proto.SerializeToOstream(&output);
+}
+
 

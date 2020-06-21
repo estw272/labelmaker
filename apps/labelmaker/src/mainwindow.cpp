@@ -21,6 +21,7 @@ void MainWindow::init_elements() {
     ui->main_widget_holder->addWidget(main_widget);
 
     connect(main_widget, &MainWidget::num_images_loaded, this, &MainWindow::status_display_num_imgs_loaded);
+    connect(this, &MainWindow::save_state, main_widget, &MainWidget::forward_save_state);
 }
 
 void MainWindow::register_custom_structs() {
@@ -35,3 +36,6 @@ void MainWindow::status_display_num_imgs_loaded(int index_selected, int num_imgs
     }
 }
 
+void MainWindow::closeEvent(QCloseEvent* event) {
+    emit save_state();
+}
