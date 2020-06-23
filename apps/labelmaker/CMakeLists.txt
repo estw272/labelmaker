@@ -48,7 +48,7 @@ set(RESOURCE_FILES
         src/utility.cpp
         src/labelsdialog.cpp
 )
-add_executable(labelmaker ${HEADER_FILES} ${SOURCE_FILES} ${UI_FILES} ${RESOURCE_FILES})
+add_executable(labelmaker WIN32 ${HEADER_FILES} ${SOURCE_FILES} ${UI_FILES} ${RESOURCE_FILES})
 set_target_properties(labelmaker PROPERTIES OUTPUT_NAME labelmaker)
 set_target_properties(labelmaker PROPERTIES LINKER_LANGUAGE CXX)
 target_precompile_headers(labelmaker PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/pch.h)

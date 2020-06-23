@@ -10,17 +10,20 @@ class LabelsDialog;
 class LabelsDialog : public QDialog {
     Q_OBJECT
 
+private:
+    Ui::LabelsDialog *ui;
+
 public:
     explicit LabelsDialog(QWidget *parent = nullptr);
     ~LabelsDialog();
-
-private:
-    Ui::LabelsDialog *ui;
 
 public slots:
     void create_labels();
     void import_labels();
     void export_labels();
+
+private:
+    void init_elements();
 
 signals:
     void labels_changed();

@@ -6,9 +6,7 @@
 LabelsDialog::LabelsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::LabelsDialog) {
     ui->setupUi(this);
 
-    connect(ui->ok_button, &QPushButton::clicked, this, &LabelsDialog::create_labels);
-    connect(ui->import_button, &QPushButton::clicked, this, &LabelsDialog::import_labels);
-    connect(ui->export_button, &QPushButton::clicked, this, &LabelsDialog::export_labels);
+    init_elements();
 }
 
 LabelsDialog::~LabelsDialog() {
@@ -33,4 +31,12 @@ void LabelsDialog::import_labels() {
 }
 
 void LabelsDialog::export_labels() {
+}
+
+void LabelsDialog::init_elements() {
+    ui->ok_button->setDefault(true);
+
+    connect(ui->ok_button, &QPushButton::clicked, this, &LabelsDialog::create_labels);
+    connect(ui->import_button, &QPushButton::clicked, this, &LabelsDialog::import_labels);
+    connect(ui->export_button, &QPushButton::clicked, this, &LabelsDialog::export_labels);
 }
