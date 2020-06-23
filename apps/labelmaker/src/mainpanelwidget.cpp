@@ -70,6 +70,7 @@ void MainPanelWidget::init_elements() {
         connect(tags_widget, &TagsWidget::tag_toggled, this, &MainPanelWidget::toggle_tag);
         connect(this, &MainPanelWidget::load_tags, tags_widget, &TagsWidget::load_tags);
         connect(this, &MainPanelWidget::labels_changed, tags_widget, &TagsWidget::add_tags);
+        connect(tags_widget, &TagsWidget::new_labels_set, this, &MainPanelWidget::forward_new_labels_set);
 
         return tags_widget;
     };
@@ -119,6 +120,7 @@ void MainPanelWidget::load_folder() { //#TODO: refactor to different functions
 
     std::vector<ImageInfo> filenames_vec;
     std::set<ImageInfo> loaded_tags = load_tags_from_file(path + L"/cache.lm");
+    load_labels_from_file(path + L"/labels.lm");
 
     std::set<std::string> image_extensions {".png", ".jpg", ".bmp", ".jpeg"}; //#TODO: move tags filename and extensions somewhere (like json/settings file)
     for (const auto &item: std::filesystem::directory_iterator(path)) {
@@ -219,6 +221,8 @@ void MainPanelWidget::toggle_tag(QString name, bool active) {
 }
 
 void MainPanelWidget::save_state_to_file() {
+    save_labels_to_file();
+
     std::vector<ImageInfo> data = images_table_model_->get_data();
     if (data.empty()) {
         return;
@@ -313,6 +317,55 @@ void MainPanelWidget::set_new_labels() {
     if (labels_dialog.exec() == QDialog::Accepted) {
         emit labels_changed();
     }
+}
+
+void MainPanelWidget::forward_new_labels_set() {
+    emit new_labels_set();
+}
+
+void MainPanelWidget::save_labels_to_file() {
+    std::vector<QString> tags = ProgramState::instance().get_tags();
+    if (tags.empty()) {
+        return;
+    }
+
+    ProtoLabels proto;
+    std::for_each(tags.cbegin(), tags.cend(), [&proto](auto item){
+        ProtoTag* ptag = proto.add_tags();
+        ptag->set_tag_name(item.toStdString());
+    });
+
+    std::wstring open_path = ProgramState::instance().get_open_path().toStdWString();
+    std::fstream output(open_path + L"/labels.lm", std::ios::out | std::ios::trunc | std::ios::binary);
+    proto.SerializeToOstream(&output);
+}
+
+void MainPanelWidget::load_labels_from_file(std::wstring file_path) {
+    if (!std::filesystem::exists(std::filesystem::path(file_path))) {
+        return;
+    }
+
+    ProtoLabels proto;
+    std::fstream input(file_path, std::ios::in | std::ios::binary);
+    if (!proto.ParseFromIstream(&input)) {
+        return;
+        //#TODO: logging
+    }
+
+    std::vector<QString> labels_vec;
+    for (int i = 0; i < proto.tags_size(); ++i) {
+        const ProtoTag& pinfo = proto.tags(i);
+        labels_vec.push_back(QString::fromStdString(pinfo.tag_name()));
+    }
+
+    if (!labels_vec.empty()) {
+        set_labels(labels_vec);
+    }
+}
+
+void MainPanelWidget::set_labels(std::vector<QString> &labels_vec) {
+    ProgramState::instance().write_labels(labels_vec);
+    emit labels_changed();
 }
 
 

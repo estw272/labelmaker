@@ -27,6 +27,7 @@ public slots:
 signals:
     void tag_toggled(QString name, bool active);
     void load_tags(std::set<std::string> tags);
+    void new_labels_set();
 };
 
 #endif

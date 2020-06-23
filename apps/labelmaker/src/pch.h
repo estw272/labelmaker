@@ -59,6 +59,7 @@
 
 //protobuf
 #include "prototagscache.pb.h"
+#include "protolabels.pb.h"
 
 #pragma warning(pop)
 

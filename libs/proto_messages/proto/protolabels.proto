@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+import "prototag.proto";
+
+message ProtoLabels {
+    repeated ProtoTag tags = 1;
+}

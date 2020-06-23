@@ -53,4 +53,6 @@ void TagsWidget::add_tags() {
     });
     this->setLayout(tags_layout_);
     std::cout << tags_layout_->count() << "\n";
+
+    emit new_labels_set();
 }
