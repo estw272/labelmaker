@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "tag.h"
+#include "programstate.h"
 
 Tag::Tag(const QString& text, QWidget* parent) : QPushButton(text, parent),
     selected_(false),

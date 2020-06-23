@@ -145,6 +145,7 @@ void MainPanelWidget::load_folder() { //#TODO: refactor to different functions
         }
     }
 
+    ProgramState::instance().set_labels_counter(filenames_vec);
     images_table_model_->update_data(filenames_vec);
     emit num_images_loaded(-1, static_cast<int>(images_table_model_->data_ref().size()));
 }
@@ -211,8 +212,10 @@ void MainPanelWidget::toggle_tag(QString name, bool active) {
 
         if (active) {
             item.tags_.insert(name.toStdString());
+            ProgramState::instance().increment_label_counter(name);
         } else {
             item.tags_.erase(name.toStdString());
+            ProgramState::instance().decrement_label_counter(name);
         }
         model->dataChanged(index, index);
 
@@ -321,6 +324,7 @@ void MainPanelWidget::set_new_labels() {
 
 void MainPanelWidget::forward_new_labels_set() {
     emit new_labels_set();
+    ProgramState::instance().set_labels_counter(images_table_model_->get_data());
 }
 
 void MainPanelWidget::save_labels_to_file() {

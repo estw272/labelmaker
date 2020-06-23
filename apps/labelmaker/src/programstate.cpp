@@ -43,4 +43,40 @@ const std::vector<QKeySequence> ProgramState::get_hotkeys() const {
 
 void ProgramState::write_labels(std::vector<QString> labels) {
     tags_.swap(labels);
+    reset_labels_counter();
+}
+
+void ProgramState::reset_labels_counter() {
+    labels_counter_.clear();
+    for_each(tags_.cbegin(), tags_.cend(), [this](auto item){
+        labels_counter_[item] = 0;
+    });
+}
+
+const std::map<QString, int> ProgramState::get_labels_count() const {
+    return labels_counter_;
+}
+
+void ProgramState::increment_label_counter(QString label) {
+    if (labels_counter_.find(label) != labels_counter_.end()) {
+        labels_counter_.at(label) += 1;
+    }
+}
+
+void ProgramState::decrement_label_counter(QString label) {
+    if (labels_counter_.find(label) != labels_counter_.end()) {
+        labels_counter_.at(label) -= 1;
+    }
+}
+
+void ProgramState::set_labels_counter(const std::vector<ImageInfo>& data) {
+    if (!tags_.empty() && !data.empty()) {
+        reset_labels_counter();
+
+        std::for_each(data.cbegin(), data.cend(), [this](auto image_info){
+            std::for_each(image_info.tags_.cbegin(), image_info.tags_.cend(), [this](auto tag){
+                labels_counter_[QString::fromStdString(tag)] += 1;
+            });
+        });
+    }
 }
