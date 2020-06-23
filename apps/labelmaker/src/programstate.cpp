@@ -3,11 +3,11 @@
 
 ProgramState::ProgramState() {
     //#TODO: implement adding tags
-    tags_.push_back("ignore");
-    tags_.push_back("seal");
-    tags_.push_back("signature");
-    tags_.push_back("name");
-    tags_.push_back("date");
+//    tags_.push_back("ignore");
+//    tags_.push_back("seal");
+//    tags_.push_back("signature");
+//    tags_.push_back("name");
+//    tags_.push_back("date");
 
     hotkeys_.push_back(QKeySequence(Qt::Key_1));
     hotkeys_.push_back(QKeySequence(Qt::Key_2));
@@ -39,4 +39,8 @@ void ProgramState::set_open_path(std::wstring path) {
 
 const std::vector<QKeySequence> ProgramState::get_hotkeys() const {
     return hotkeys_;
+}
+
+void ProgramState::write_labels(std::vector<QString> labels) {
+    tags_.swap(labels);
 }

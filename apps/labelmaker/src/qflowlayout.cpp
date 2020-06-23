@@ -137,3 +137,11 @@ int QFlowLayout::smartSpacing(QStyle::PixelMetric pm) const {
 size_t QFlowLayout::num_tags() const {
     return item_list_.size();
 }
+
+void QFlowLayout::clear() {
+    while (!item_list_.isEmpty()) {
+        auto x = this->takeAt(0);
+        x->widget()->close();
+        delete x;
+    }
+}

@@ -33,6 +33,7 @@ public slots:
     void toggle_tag(QString name, bool active);
     void save_state_to_file();
     void export_to_csv();
+    void set_new_labels();
 
     TagsWidget* get_tags_widget() const;
 
@@ -40,7 +41,7 @@ signals:
     void num_images_loaded(int, int);
     void update_image_path(QString);
     void load_tags(std::set<std::string> tags);
-
+    void labels_changed();
 };
 
 #endif

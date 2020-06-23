@@ -24,6 +24,7 @@ set(HEADER_FILES
         src/imageinfo.h
         src/imageviewerwidget.h
         src/utility.h
+        src/labelsdialog.h
 )
 set(SOURCE_FILES
         src/main.cpp
@@ -31,6 +32,7 @@ set(SOURCE_FILES
 set(UI_FILES
         src/mainwindow.ui
         src/mainwidget.ui
+        src/labelsdialog.ui
 )
 set(RESOURCE_FILES
         src/mainwindow.cpp
@@ -44,6 +46,7 @@ set(RESOURCE_FILES
         src/imageinfo.cpp
         src/imageviewerwidget.cpp
         src/utility.cpp
+        src/labelsdialog.cpp
 )
 add_executable(labelmaker ${HEADER_FILES} ${SOURCE_FILES} ${UI_FILES} ${RESOURCE_FILES})
 set_target_properties(labelmaker PROPERTIES OUTPUT_NAME labelmaker)

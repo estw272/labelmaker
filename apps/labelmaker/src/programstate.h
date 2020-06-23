@@ -25,6 +25,8 @@ public:
     const std::vector<QString> get_tags() const;
     const std::vector<QKeySequence> get_hotkeys() const;
 
+    void write_labels(std::vector<QString> labels);
+
     QString get_open_path() const;
     void set_open_path(QString path);
     void set_open_path(std::wstring path);

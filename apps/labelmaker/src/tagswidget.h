@@ -22,6 +22,7 @@ public:
 public slots:
     void forward_tag_toggle(QString name, bool active);
     void forward_load_tags(std::set<std::string> tags);
+    void add_tags();
 
 signals:
     void tag_toggled(QString name, bool active);

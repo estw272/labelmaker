@@ -2,6 +2,7 @@
 #include "mainpanelwidget.h"
 #include "programstate.h"
 #include "utility.h"
+#include "labelsdialog.h"
 
 MainPanelWidget::MainPanelWidget(QWidget *parent) : QWidget(parent) {
    init_elements();
@@ -68,8 +69,15 @@ void MainPanelWidget::init_elements() {
         TagsWidget* tags_widget = new TagsWidget();
         connect(tags_widget, &TagsWidget::tag_toggled, this, &MainPanelWidget::toggle_tag);
         connect(this, &MainPanelWidget::load_tags, tags_widget, &TagsWidget::load_tags);
+        connect(this, &MainPanelWidget::labels_changed, tags_widget, &TagsWidget::add_tags);
 
         return tags_widget;
+    };
+
+    auto init_set_labels_button = [this]() -> QPushButton* {
+        QPushButton* set_labels_button = new QPushButton("Set labels");
+        connect(set_labels_button, &QPushButton::clicked, this, &MainPanelWidget::set_new_labels);
+        return set_labels_button;
     };
 
     main_layout_ = new QVBoxLayout();
@@ -80,9 +88,11 @@ void MainPanelWidget::init_elements() {
     auto top_layout = init_top_layout();
     auto splitter = init_table_tagswidget_splitter(tags_widget_);
     init_hotkeys();
+    QPushButton* set_labels_button = init_set_labels_button();
 
     main_layout_->addLayout(top_layout);
     main_layout_->addWidget(splitter);
+    main_layout_->addWidget(set_labels_button);
 
     this->setLayout(main_layout_);
 }
@@ -296,6 +306,13 @@ void MainPanelWidget::export_to_csv() {
     msg_box.setText("Exported labels to 'labels.csv'");
     msg_box.addButton(QMessageBox::Ok);
     msg_box.exec();
+}
+
+void MainPanelWidget::set_new_labels() {
+    LabelsDialog labels_dialog;
+    if (labels_dialog.exec() == QDialog::Accepted) {
+        emit labels_changed();
+    }
 }
 
 
