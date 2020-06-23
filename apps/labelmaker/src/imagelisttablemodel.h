@@ -22,7 +22,7 @@ public:
     void update_data(std::vector<ImageInfo>& new_data);
     const std::vector<ImageInfo>& data_ref() const;
 
-    ImageInfo& get_data_ref(std::string& filename);
+    ImageInfo& get_data_ref(std::wstring& filename);
     std::vector<ImageInfo> get_data() const;
 
 };

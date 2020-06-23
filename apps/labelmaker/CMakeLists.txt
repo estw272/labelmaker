@@ -23,6 +23,7 @@ set(HEADER_FILES
         src/tag.h
         src/imageinfo.h
         src/imageviewerwidget.h
+        src/utility.h
 )
 set(SOURCE_FILES
         src/main.cpp
@@ -42,6 +43,7 @@ set(RESOURCE_FILES
         src/tag.cpp
         src/imageinfo.cpp
         src/imageviewerwidget.cpp
+        src/utility.cpp
 )
 add_executable(labelmaker ${HEADER_FILES} ${SOURCE_FILES} ${UI_FILES} ${RESOURCE_FILES})
 set_target_properties(labelmaker PROPERTIES OUTPUT_NAME labelmaker)

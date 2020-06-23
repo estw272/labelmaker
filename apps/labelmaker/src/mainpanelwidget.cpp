@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "mainpanelwidget.h"
 #include "programstate.h"
+#include "utility.h"
 
 MainPanelWidget::MainPanelWidget(QWidget *parent) : QWidget(parent) {
    init_elements();
@@ -107,13 +108,13 @@ void MainPanelWidget::load_folder() { //#TODO: refactor to different functions
     ProgramState::instance().set_open_path(dir_path_qstr);
 
     std::vector<ImageInfo> filenames_vec;
-    std::set<ImageInfo> loaded_tags = load_tags_from_file(path + L"/tags.lm");
+    std::set<ImageInfo> loaded_tags = load_tags_from_file(path + L"/cache.lm");
 
     std::set<std::string> image_extensions {".png", ".jpg", ".bmp", ".jpeg"}; //#TODO: move tags filename and extensions somewhere (like json/settings file)
     for (const auto &item: std::filesystem::directory_iterator(path)) {
         try {
             if (std::filesystem::is_regular_file(item)) {
-                std::string filename = item.path().filename().string();
+                std::wstring filename = item.path().filename().wstring();
                 std::string file_extension = item.path().extension().string();
                 if (!image_extensions.contains(file_extension)) {
                     continue;
@@ -149,7 +150,7 @@ void MainPanelWidget::image_selection_changed(const QModelIndex& current, const 
     emit update_image_path(image_name);
 
     //toggle image tags
-    std::string image_filename = model->data(model->index(current.row(), 0)).toString().toStdString();
+    std::wstring image_filename = model->data(model->index(current.row(), 0)).toString().toStdWString();
     ImageInfo& item = images_table_model_->get_data_ref(image_filename);
     emit load_tags(item.tags_);
 }
@@ -193,7 +194,7 @@ void MainPanelWidget::toggle_tag(QString name, bool active) {
     if (!selection.empty()) {
         QModelIndex index = selection.at(0);
         auto model = images_table_->model();
-        std::string image_filename = model->data(model->index(index.row(), 0)).toString().toStdString();
+        std::wstring image_filename = model->data(model->index(index.row(), 0)).toString().toStdWString();
         ImageInfo& item = images_table_model_->get_data_ref(image_filename);
 
         if (active) {
@@ -217,7 +218,7 @@ void MainPanelWidget::save_state_to_file() {
     std::for_each(data.cbegin(), data.cend(), [&proto](auto album){
         if (!album.tags_.empty()) {
             ProtoImageInfo* pinfo = proto.add_image_info();
-            pinfo->set_filename(album.file_name_);
+            pinfo->set_filename(lm::utility::strings::wstr_to_bytes(album.file_name_));
             for (auto item: album.tags_) {
                 ProtoTag* tag = pinfo->add_tags();
                 tag->set_tag_name(item);
@@ -226,7 +227,7 @@ void MainPanelWidget::save_state_to_file() {
     });
 
     std::wstring open_path = ProgramState::instance().get_open_path().toStdWString();
-    std::fstream output(open_path + L"/tags.lm", std::ios::out | std::ios::trunc | std::ios::binary);
+    std::fstream output(open_path + L"/cache.lm", std::ios::out | std::ios::trunc | std::ios::binary);
     proto.SerializeToOstream(&output);
 }
 
@@ -260,11 +261,11 @@ void MainPanelWidget::export_to_csv() {
 
     std::wstring open_path = ProgramState::instance().get_open_path().toStdWString();
     std::ofstream file;
-    file.open(open_path + L"/labels.csv");
+    file.open(open_path + L"/labels.csv", std::ios::binary);
     file << "filename,";
     auto tags = ProgramState::instance().get_tags();
     for (int i = 0; i < tags.size(); ++i) {
-        file << tags.at(i).toStdString();
+        file << lm::utility::strings::wstr_to_bytes(tags.at(i).toStdWString());
         if (i < tags.size() - 1) {
             file << ",";
         }
@@ -272,7 +273,8 @@ void MainPanelWidget::export_to_csv() {
     file << "\n";
 
     std::for_each(data.cbegin(), data.cend(), [&file, &tags](auto item){
-        file << item.file_name_ << ", ";
+        std::wcout << item.file_name_.size() << "\n";
+        file << lm::utility::strings::wstr_to_bytes(item.file_name_) << ", ";
         for (int i = 0; i < tags.size(); ++i) {
             if (item.tags_.find(tags.at(i).toStdString()) != item.tags_.end()) {
                 file << "1";

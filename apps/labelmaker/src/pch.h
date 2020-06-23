@@ -19,6 +19,7 @@
 #include <mutex>
 #include <string_view>
 #include <fstream>
+#include <codecvt>
 
 //QT stuff
 #include <QtWidgets/QApplication>

@@ -1,10 +1,11 @@
 #include "pch.h"
 #include "imageinfo.h"
+#include "utility.h"
 
 ImageInfo::ImageInfo() {}
 
 ImageInfo::ImageInfo(const ProtoImageInfo& pinfo):
-    file_name_(pinfo.filename())  {
+    file_name_(lm::utility::strings::bytes_to_wstr(pinfo.filename()))  {
 
         for (int i = 0; i < pinfo.tags_size(); ++i) {
             const ProtoTag& tag = pinfo.tags(i);
@@ -20,6 +21,6 @@ ImageInfo::ImageInfo(const ProtoImageInfo& pinfo):
 //    return imginfo;
 //}
 
-ImageInfo::ImageInfo(std::string file_name): file_name_(file_name) {
+ImageInfo::ImageInfo(std::wstring file_name): file_name_(file_name) {
 }
 

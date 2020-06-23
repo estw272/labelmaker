@@ -4,12 +4,12 @@
 
 class ImageInfo {
 public:
-    std::string file_name_;
+    std::wstring file_name_;
     std::set<std::string> tags_;
 
 public:
     ImageInfo();
-    explicit ImageInfo(std::string file_name);
+    explicit ImageInfo(std::wstring file_name);
     explicit ImageInfo(const ProtoImageInfo& pinfo);
 
 //    ProtoImageInfo serialize() const;

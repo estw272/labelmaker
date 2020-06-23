@@ -20,7 +20,7 @@ QVariant ImageListTableModel::data(const QModelIndex &index, int role) const {
 
     switch (role) {
         case Qt::DisplayRole:
-            if (col == 0) { return QString::fromStdString(data_container_.at(data_index).file_name_); }
+            if (col == 0) { return QString::fromStdWString(data_container_.at(data_index).file_name_); }
             break;
 
         case Qt::BackgroundRole:
@@ -62,7 +62,7 @@ const std::vector<ImageInfo>& ImageListTableModel::data_ref() const {
     return data_container_;
 }
 
-ImageInfo& ImageListTableModel::get_data_ref(std::string& filename) {
+ImageInfo& ImageListTableModel::get_data_ref(std::wstring& filename) {
     for (auto& item: data_container_) {
         if (item.file_name_ == filename) {
             return item;
