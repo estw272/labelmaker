@@ -25,6 +25,7 @@ void MainPanelWidget::init_elements() {
         images_table_->setSelectionBehavior(QAbstractItemView::SelectRows);
         images_table_->setFocusPolicy(Qt::NoFocus);
         images_table_->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        images_table_->setStyleSheet("QTableView::item::selection {selection-background-color: #b3d9ff}");
 
         images_table_->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
