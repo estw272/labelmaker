@@ -1,0 +1,11 @@
+prefix=C:/Progr/vcpkg-master/packages/fmt_x64-windows-static/debug
+exec_prefix=C:/Progr/vcpkg-master/packages/fmt_x64-windows-static/debug
+libdir=C:/Progr/vcpkg-master/packages/fmt_x64-windows-static/debug/lib
+includedir=C:/Progr/vcpkg-master/packages/fmt_x64-windows-static/debug/include
+
+Name: fmt
+Description: A modern formatting library
+Version: 6.0.0
+Libs: -L${libdir} -lfmt
+Cflags: -I${includedir}
+

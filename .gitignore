@@ -6,6 +6,9 @@
 build
 cmake-build-debug
 cmake-build-release
+opencv4_x64-windows-static
+protobuf_x64-windows-static
+qt5_x64-windows
 
 # files
 cmake/LibsPath.cmake

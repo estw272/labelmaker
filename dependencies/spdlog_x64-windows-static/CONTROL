@@ -1,0 +1,7 @@
+Package: spdlog
+Version: 1.3.1-2
+Depends: fmt
+Architecture: x64-windows-static
+Multi-Arch: same
+Abi: 5a23879c9e914d526d028279a3a9412406c920eb
+Description: Very fast, header only, C++ logging library
